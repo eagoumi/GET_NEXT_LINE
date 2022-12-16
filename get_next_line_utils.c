@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int	ft_strlen(char *string)
+size_t	ft_strlen(const char *string)
 {
 	int	count;
 
