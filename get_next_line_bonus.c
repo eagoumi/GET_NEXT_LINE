@@ -58,28 +58,28 @@ char	*ft_reded_line(int fd, char *readed_line)
 char	*get_next_line(int fd)
 {
 	int			i;
-	static char	*readed_line = NULL;
+	static char	*readed_line[10240];
 	char		*temp;
 	char		*temp1;
 
-	readed_line = ft_reded_line(fd, readed_line);
-	if (readed_line == NULL)
+	readed_line[fd] = ft_reded_line(fd, readed_line[fd]);
+	if (readed_line[fd] == NULL)
 		return (NULL);
 	i = 0;
-	while (readed_line[i] != '\0' && readed_line[i] != '\n')
+	while (readed_line[fd][i] != '\0' && readed_line[fd][i] != '\n')
 		i++;
-	if (readed_line[i] != '\0')
+	if (readed_line[fd][i] != '\0')
 		i++;
-	temp1 = ft_substr(readed_line, 0, i);
+	temp1 = ft_substr(readed_line[fd], 0, i);
 	if (temp1 == NULL)
 	{
-		free (readed_line);
+		free (readed_line[fd]);
 		return (NULL);
 	}
-	temp = readed_line;
-	readed_line = ft_substr(readed_line, i, (ft_strlen(temp) - i));
+	temp = readed_line[fd];
+	readed_line[fd] = ft_substr(readed_line[fd], i, (ft_strlen(temp) - i));
 	free(temp);
-	if (readed_line == NULL)
+	if (readed_line[fd] == NULL)
 		return (NULL);
 	return (temp1);
 }
